@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const connection = require('./database/database');
+// Carregando as rotas para o arquivo principal
+const categoriesController = require('./categories/CategoriesController');
+const articlesController = require('./articles/ArticlesController');
 
 connection
   .authenticate()
@@ -17,6 +20,10 @@ app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Utilizando as rotas existentes nos controllers utilizando um prefixo
+app.use('/categories', categoriesController);
+app.use('/articles', articlesController);
 
 app.get('/', (req, res) => {
   res.render('index');
