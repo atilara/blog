@@ -1,0 +1,25 @@
+<%- include('../../partials/header'); -%>
+<div class="container mt-3">
+  <h3>Categorias</h3>
+  <table class="table table-bordered mt-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Categoria</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% categories.forEach((categories) => { %>
+        <tr>
+          <th><%= categories.id %> </th>
+          <th><%= categories.title %> </th>
+          <th><%= categories.slug %> </th>
+          <th>Vazio </th>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+<%- include('../../partials/footer'); -%>
