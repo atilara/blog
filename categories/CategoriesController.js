@@ -19,10 +19,10 @@ router.post('/categories/save', (req, res) => {
       // Transformando título em slug
       slug: slugify(title),
     }).then(() => {
-      res.redirect('/');
+      res.redirect('/admin/categories');
     });
   } else {
-    res.redirect('admin/categories/new');
+    res.redirect('/admin/categories/new');
   }
 });
 
@@ -51,6 +51,39 @@ router.post('/categories/delete', (req, res) => {
   } else {
     res.redirect('/admin/categories');
   }
+});
+
+router.get('/admin/categories/edit/:id', (req, res) => {
+  var id = req.params.id;
+  // Redireciona caso o id não seja um número
+  if (isNaN(id)) res.redirect('/admin/categories');
+
+  // find by primary key, ou seja, id
+  Category.findByPk(id)
+    .then((category) => {
+      if (category != undefined) {
+        res.render('admin/categories/edit', {
+          category: category,
+        });
+      } else {
+        res.redirect('/admin/categories');
+      }
+    })
+    .catch((error) => {
+      res.redirect('/admin/categories');
+    });
+});
+
+router.post('/categories/update', (req, res) => {
+  var id = req.body.id;
+  var title = req.body.title;
+  // Atualiza título onde o id for igual ao recebido
+  Category.update(
+    { title: title, slug: slugify(title) },
+    { where: { id: id } },
+  ).then(() => {
+    res.redirect('/admin/categories');
+  });
 });
 
 module.exports = router;

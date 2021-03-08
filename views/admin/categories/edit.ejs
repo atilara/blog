@@ -1,0 +1,16 @@
+<%- include('../../partials/header'); -%>
+<div class="container mt-3">
+  <div class="card">
+    <div class="card-header">
+      <h3>Edição de categorias</h3>
+    </div>
+    <div class="card-body">
+      <form method="POST" action="/categories/update">
+        <input type="hidden" name="id" value="<%= category.id %>">
+        <input type="text" name="title" placeholder="Informe o título da categoria" value="<%= category.title %>" class="form-control">
+        <button class="btn btn-success mt-2">Atualizar</button>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('../../partials/footer'); -%>

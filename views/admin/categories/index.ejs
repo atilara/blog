@@ -17,7 +17,7 @@
           <th><%= categories.title %> </th>
           <th><%= categories.slug %> </th>
           <th>
-            <button class="btn btn-warning mr-3">Editar</button>
+            <a href="/admin/categories/edit/<%= categories.id %>" class="btn btn-warning mr-3">Editar</a>
             <!-- 
               Truque onde enviamos o valor do id através do campo escondido
               O button chama o form que abre a roda para deletar a categoria
