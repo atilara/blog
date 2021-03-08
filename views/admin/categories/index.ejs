@@ -6,7 +6,7 @@
       <tr>
         <th>ID</th>
         <th>Título</th>
-        <th>Categoria</th>
+        <th>Slug</th>
         <th>Ações</th>
       </tr>
     </thead>
@@ -16,7 +16,17 @@
           <th><%= categories.id %> </th>
           <th><%= categories.title %> </th>
           <th><%= categories.slug %> </th>
-          <th>Vazio </th>
+          <th>
+            <button class="btn btn-warning mr-3">Editar</button>
+            <!-- 
+              Truque onde enviamos o valor do id através do campo escondido
+              O button chama o form que abre a roda para deletar a categoria
+            -->
+            <form method="POST" action="/categories/delete" style="display: inline;">
+              <input type="hidden" name="id" value="<%= categories.id %>">
+              <button class="btn btn-danger">Excluir</button>
+            </form>
+          </th>
         </tr>
       <% }); %>
     </tbody>

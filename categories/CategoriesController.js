@@ -34,4 +34,23 @@ router.get('/admin/categories', (req, res) => {
   });
 });
 
+router.post('/categories/delete', (req, res) => {
+  var id = req.body.id;
+  if (id != undefined) {
+    // Verifica se o id é numérico
+    if (!isNaN(id)) {
+      // Método para excluir categoria, chamando método destroy e passando JSON
+      Category.destroy({
+        where: { id: id },
+      }).then(() => {
+        res.redirect('/admin/categories');
+      });
+    } else {
+      res.redirect('/admin/categories');
+    }
+  } else {
+    res.redirect('/admin/categories');
+  }
+});
+
 module.exports = router;
