@@ -25,8 +25,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Utilizando as rotas existentes nos controllers utilizando um prefixo
-app.use('/categories', categoriesController);
-app.use('/articles', articlesController);
+app.use('/', categoriesController);
+app.use('/', articlesController);
 
 app.get('/', (req, res) => {
   res.render('index');
