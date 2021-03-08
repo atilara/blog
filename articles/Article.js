@@ -1,5 +1,7 @@
 const sequelize = require('sequelize');
 const connection = require('../database/database');
+// Importando model de categoria para definir o relacionamento entre as tabelas
+const Category = require('../categories/Category');
 
 const Article = connection.define('articles', {
   title: {
@@ -15,5 +17,10 @@ const Article = connection.define('articles', {
     allowNull: false,
   },
 });
+
+Category.hasMany(Article);
+Article.belongsTo(Category);
+
+// Article.sync();
 
 module.exports = Article;

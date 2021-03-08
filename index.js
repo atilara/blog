@@ -5,6 +5,9 @@ const connection = require('./database/database');
 // Carregando as rotas para o arquivo principal
 const categoriesController = require('./categories/CategoriesController');
 const articlesController = require('./articles/ArticlesController');
+// Importando os models para criação das tabelas
+const Article = require('./articles/Article');
+const Category = require('./categories/Category');
 
 connection
   .authenticate()
