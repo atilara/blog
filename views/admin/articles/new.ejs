@@ -1,0 +1,29 @@
+<%- include('../../partials/header'); -%>
+<div class="container mt-3">
+  <div class="card">
+    <div class="card-header">
+      <h3>Cadastro de artigos</h3>
+    </div>
+    <div class="card-body">
+      <form method="POST" action="/articles/save">
+        <input type="text" name="title" placeholder="Informe o título do artigo" class="form-control mb-2">
+        <textarea name="body" id="body" placeholder="Escreva seu artigo aqui" rows="20" class="form-control"></textarea>
+        <button class="btn btn-success mt-2">Cadastrar</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Importando o TinyMCE, que dá superpoderes a textarea -->
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+  // Inicia e seleciona o campo a ser utilizado através do id, e tbm adiciona plugins
+  tinymce.init({
+    // Tradução do tinymce através do language package
+    language: 'pt_BR',
+    selector: "#body",
+    plugins: [
+      'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+    ]
+  });
+</script>
+<%- include('../../partials/footer'); -%>
