@@ -11,19 +11,19 @@
       </tr>
     </thead>
     <tbody>
-      <% categories.forEach((categories) => { %>
+      <% categories.forEach((category) => { %>
         <tr>
-          <th><%= categories.id %> </th>
-          <th><%= categories.title %> </th>
-          <th><%= categories.slug %> </th>
+          <th><%= category.id %> </th>
+          <th><%= category.title %> </th>
+          <th><%= category.slug %> </th>
           <th>
-            <a href="/admin/categories/edit/<%= categories.id %>" class="btn btn-warning mr-3">Editar</a>
+            <a href="/admin/categories/edit/<%= category.id %>" class="btn btn-warning mr-3">Editar</a>
             <!-- 
               Truque onde enviamos o valor do id através do campo escondido
               O button chama o form que abre a roda para deletar a categoria
             -->
             <form method="POST" action="/categories/delete" onsubmit="confirmExclusion(event, this);" style="display: inline;">
-              <input type="hidden" name="id" value="<%= categories.id %>">
+              <input type="hidden" name="id" value="<%= category.id %>">
               <button class="btn btn-danger">Excluir</button>
             </form>
           </th>

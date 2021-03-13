@@ -6,13 +6,7 @@ const slugify = require('slugify');
 
 // Rotas criadas para lidar com artigos
 
-//Rota para listagem de todos os artigos
-router.get('/admin/articles', (req, res) => {
-  Article.findAll().then((articles) => {
-    res.render('admin/articles', { articles: articles });
-  });
-});
-
+// CREATE
 // Rota para criação de um novo artigo
 router.get('/admin/articles/new', (req, res) => {
   Category.findAll().then((categories) => {
@@ -35,6 +29,14 @@ router.post('/articles/save', (req, res) => {
     categoryId: category,
   }).then(() => {
     res.redirect('/admin/articles');
+  });
+});
+
+// READ
+//Rota para listagem de todos os artigos
+router.get('/admin/articles', (req, res) => {
+  Article.findAll().then((articles) => {
+    res.render('admin/articles', { articles: articles });
   });
 });
 
