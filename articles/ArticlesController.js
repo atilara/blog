@@ -9,6 +9,7 @@ const slugify = require('slugify');
 // CREATE
 // Rota para criação de um novo artigo
 router.get('/admin/articles/new', (req, res) => {
+  // Incluindo o model Category na busca devido ao relacionamento existente entre as tabelas
   Category.findAll().then((categories) => {
     // Passando a variável pro view
     res.render('admin/articles/new', { categories: categories });
@@ -35,7 +36,10 @@ router.post('/articles/save', (req, res) => {
 // READ
 //Rota para listagem de todos os artigos
 router.get('/admin/articles', (req, res) => {
-  Article.findAll().then((articles) => {
+  Article.findAll({
+    // Inclui o model de categoria na pesquisa devido ao relacionamento
+    include: [{ model: Category }],
+  }).then((articles) => {
     res.render('admin/articles', { articles: articles });
   });
 });

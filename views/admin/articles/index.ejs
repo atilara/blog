@@ -17,7 +17,8 @@
           <th><%= article.id %> </th>
           <th><%= article.title %> </th>
           <th><%= article.slug %> </th>
-          <th><%= article.categoryId %></th>
+          <!-- A linha abaixo é possível devido a inclusão do model no arquivo article.js -->
+          <th><%= article.category.title %></th>
           <th>
             <a href="/admin/categories/edit/<%= article.id %>" class="btn btn-warning mr-3">Editar</a>
             <!-- 
