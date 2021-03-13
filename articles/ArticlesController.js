@@ -6,10 +6,14 @@ const slugify = require('slugify');
 
 // Rotas criadas para lidar com artigos
 
+//Rota para listagem de todos os artigos
 router.get('/admin/articles', (req, res) => {
-  res.send('Rota de Artigos');
+  Article.findAll().then((articles) => {
+    res.render('admin/articles', { articles: articles });
+  });
 });
 
+// Rota para criação de um novo artigo
 router.get('/admin/articles/new', (req, res) => {
   Category.findAll().then((categories) => {
     // Passando a variável pro view
@@ -17,6 +21,7 @@ router.get('/admin/articles/new', (req, res) => {
   });
 });
 
+// Rota que salva os dados recebidos através do form localizado na rota new
 router.post('/articles/save', (req, res) => {
   var title = req.body.title;
   var body = req.body.body;
