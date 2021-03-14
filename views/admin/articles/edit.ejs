@@ -1,0 +1,39 @@
+<%- include('../../partials/header'); -%>
+<%- include('../../partials/admin-navbar'); -%>
+<div class="container mt-3">
+  <div class="card">
+    <div class="card-header">
+      <h3>Edição de Artigo</h3>
+    </div>
+    <div class="card-body">
+      <form method="POST" action="/articles/update">
+        <input type="hidden" name="id" value="<%= article.id %>">
+        <input type="text" name="title" value="<%= article.title %>" placeholder="Informe o título do artigo" class="form-control mb-2">
+        <textarea name="body" id="body" placeholder="Escreva seu artigo aqui" rows="20" class="form-control">
+          <%- article.body %>
+        </textarea>
+        <label class="mt-3">Categoria</label>
+        <select name="category" class="form-control mt-1">
+          <% categories.forEach((category) => { %>
+            <option value="<%= category.id %>"><%= category.title %></option>
+          <% }); %>
+        </select>
+        <button class="btn btn-success mt-3">Editar</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Importando o TinyMCE, que dá superpoderes a textarea -->
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+  // Inicia e seleciona o campo a ser utilizado através do id, e tbm adiciona plugins
+  tinymce.init({
+    // Tradução do tinymce através do language package
+    language: 'pt_BR',
+    selector: "#body",
+    plugins: [
+      'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+    ]
+  });
+</script>
+<%- include('../../partials/footer'); -%>
