@@ -1,4 +1,22 @@
 <%- include('partials/header'); -%>
 <%- include('partials/user-navbar'); -%>
-  <h1>Testando</h1>
+
+<div class="bg-light p-5 rounded-lg mt-3">
+  <h1 class="display-4">Olá, mundo!</h1>
+  <p class="lead">Este é um blog desenvolvido para estudar NodeJS</p>
+  <hr class="my-4">
+  <p>Foi desenvolvido realizando uma conexão com banco de dados e alguns CRUDs</p>
+</div>
+
+<% articles.forEach((article) => { %>
+  <div class="card mt-3">
+    <div class="card-header">
+      <h3><%= article.title %></h3>
+    </div>
+    <div class="card-body">
+      <a href="#" class="btn btn-success">Ler artigo</a>
+    </div>
+  </div>
+<% }); %>
+
 <%- include('partials/footer'); -%>
