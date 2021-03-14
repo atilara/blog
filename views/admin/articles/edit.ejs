@@ -15,7 +15,11 @@
         <label class="mt-3">Categoria</label>
         <select name="category" class="form-control mt-1">
           <% categories.forEach((category) => { %>
-            <option value="<%= category.id %>"><%= category.title %></option>
+            <% if (category.id == article.categoryId) { %>
+              <option value="<%= category.id %>" selected><%= category.title %></option>
+            <% } else { %>
+              <option value="<%= category.id %>"><%= category.title %></option>
+            <% } %>
           <% }); %>
         </select>
         <button class="btn btn-success mt-3">Editar</button>
