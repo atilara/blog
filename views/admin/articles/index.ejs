@@ -20,12 +20,12 @@
           <!-- A linha abaixo é possível devido a inclusão do model no arquivo article.js -->
           <th><%= article.category.title %></th>
           <th>
-            <a href="/admin/categories/edit/<%= article.id %>" class="btn btn-warning mr-3">Editar</a>
+            <a href="/admin/articles/edit/<%= article.id %>" class="btn btn-warning mr-3">Editar</a>
             <!-- 
               Truque onde enviamos o valor do id através do campo escondido
               O button chama o form que abre a roda para deletar a categoria
             -->
-            <form method="POST" action="/categories/delete" onsubmit="confirmExclusion(event, this);" style="display: inline;">
+            <form method="POST" action="/articles/delete" onsubmit="confirmExclusion(event, this);" style="display: inline;">
               <input type="hidden" name="id" value="<%= article.id %>">
               <button class="btn btn-danger">Excluir</button>
             </form>
@@ -39,7 +39,7 @@
 <script>
   function confirmExclusion(event, form) {
     event.preventDefault();
-    var decision = confirm("Deseja deletar essa categoria?");
+    var decision = confirm("Deseja deletar esse artigo?");
     if (decision) {
       form.submit();
     } 

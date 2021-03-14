@@ -44,4 +44,25 @@ router.get('/admin/articles', (req, res) => {
   });
 });
 
+// DETELE
+router.post('/articles/delete', (req, res) => {
+  var id = req.body.id;
+
+  if (id != undefined) {
+    // Verifica se o id é numérico
+    if (!isNaN(id)) {
+      // Método para excluir artigo, chamando método destroy e passando JSON com condições
+      Article.destroy({
+        where: { id: id },
+      }).then(() => {
+        res.redirect('/admin/articles');
+      });
+    } else {
+      res.redirect('/admin/articles');
+    }
+  } else {
+    res.redirect('/admin/articles');
+  }
+});
+
 module.exports = router;
