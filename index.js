@@ -31,7 +31,9 @@ app.use('/', articlesController);
 app.get('/', (req, res) => {
   // Ordenando de forma decrescente através do order
   Article.findAll({ order: [['id', 'DESC']] }).then((articles) => {
-    res.render('index', { articles: articles });
+    Category.findAll().then((categories) => {
+      res.render('index', { articles: articles, categories: categories });
+    });
   });
 });
 
@@ -41,7 +43,36 @@ app.get('/:slug', (req, res) => {
   Article.findOne({ where: { slug: slug } })
     .then((article) => {
       if (article != undefined) {
-        res.render('article', { article: article });
+        Category.findAll().then((categories) => {
+          res.render('article', { article: article, categories: categories });
+        });
+      } else {
+        res.redirect('/');
+      }
+    })
+    .catch((error) => {
+      res.redirect('/');
+    });
+});
+
+app.get('/category/:slug', (req, res) => {
+  var slug = req.params.slug;
+  Category.findOne({
+    where: { slug: slug },
+    // Vai trazer pra gente todos os artigos que estão dentro dessa categoria
+    include: [{ model: Article }],
+  })
+    .then((category) => {
+      if (category != undefined) {
+        // Para preencher o menu das categorias
+        Category.findAll().then((categories) => {
+          res.render('index', {
+            // Array de todos os artigos pertencentes aquela categoria, só é possível
+            // graças ao include/join que foi feito anteriormente
+            articles: category.articles,
+            categories: categories,
+          });
+        });
       } else {
         res.redirect('/');
       }
