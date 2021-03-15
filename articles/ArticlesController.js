@@ -70,6 +70,34 @@ router.get('/admin/articles/edit/:id', (req, res) => {
     });
 });
 
+router.get('/articles/page/:number', (req, res) => {
+  var page = req.params.number;
+  var offset = 0;
+
+  if (isNaN(page) || page <= 1) {
+    offset = 0;
+  } else {
+    // Parse int pq vai receber String
+    offset = (parseInt(page) - 1) * 4;
+  }
+  // Encontra todos os artigos e tbm retorna a contagem de artigos
+  // Limit vai limitar a quantidade de artigos que serão retornados
+  // Offset mudará quais serão os 4 artigos retornados de acordo com o paramêtro na url
+  Article.findAndCountAll({ limit: 4, offset: offset }).then((articles) => {
+    var next;
+    if (offset + 4 >= articles.count) {
+      next = false;
+    } else {
+      next = true;
+    }
+    var result = {
+      next: next,
+      articles: articles,
+    };
+    res.json(result);
+  });
+});
+
 // Salva as informações recebidas pela rota de edit
 router.post('/articles/update', (req, res) => {
   var id = req.body.id;
