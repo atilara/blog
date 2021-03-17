@@ -83,7 +83,12 @@ router.get('/articles/page/:number', (req, res) => {
   // Encontra todos os artigos e tbm retorna a contagem de artigos
   // Limit vai limitar a quantidade de artigos que serão retornados
   // Offset mudará quais serão os 4 artigos retornados de acordo com o paramêtro na url
-  Article.findAndCountAll({ limit: 4, offset: offset }).then((articles) => {
+  // Esse método retorna a count de items e as rows (items em si)
+  Article.findAndCountAll({
+    order: [['id', 'DESC']],
+    limit: 4,
+    offset: offset,
+  }).then((articles) => {
     var next;
     if (offset + 4 >= articles.count) {
       next = false;
@@ -91,10 +96,16 @@ router.get('/articles/page/:number', (req, res) => {
       next = true;
     }
     var result = {
+      page: parseInt(page),
       next: next,
       articles: articles,
     };
-    res.json(result);
+    Category.findAll().then((categories) => {
+      res.render('admin/articles/page', {
+        result: result,
+        categories: categories,
+      });
+    });
   });
 });
 

@@ -1,0 +1,32 @@
+<%- include('../../partials/header'); -%>
+<%- include('../../partials/user-navbar'); -%>
+
+<!-- Result devido ao JSON enviado pelo articles controller e rows devido a função findAndCountAll -->
+<% result.articles.rows.forEach((article) => { %>
+  <div class="card mt-3">
+    <div class="card-header">
+      <h3><%= article.title %></h3>
+    </div>
+    <div class="card-body">
+      <a href="/<%= article.slug %>" class="btn btn-success">Ler artigo</a>
+    </div>
+  </div>
+<% }); %>
+
+<div class="`row">
+  <div class="col">
+    <% if(result.page > 2) { %>
+      <a href="/articles/page/<%= result.page - 1 %>" class="btn mt-3 mb-3" style="float: left"><<< Anterior</a>
+    <% } %>
+    <% if(result.page == 2) { %>
+      <a href="/" class="btn mt-3 mb-3" style="float: left"><<< Anterior</a>
+    <% } %>
+  </div>
+  <div class="col">
+    <% if(result.next) { %>
+      <a href="/articles/page/<%= result.page + 1 %>" class="btn mt-3 mb-3" style="float: right">Próximo >>></a>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../../partials/footer'); -%>
