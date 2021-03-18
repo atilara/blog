@@ -5,9 +5,11 @@ const connection = require('./database/database');
 // Carregando as rotas para o arquivo principal
 const categoriesController = require('./categories/CategoriesController');
 const articlesController = require('./articles/ArticlesController');
+const userController = require('./user/UsersController');
 // Importando os models para criação das tabelas
 const Article = require('./articles/Article');
 const Category = require('./categories/Category');
+const User = require('./user/User');
 
 connection
   .authenticate()
@@ -27,6 +29,7 @@ app.use(bodyParser.json());
 // Utilizando as rotas existentes nos controllers utilizando um prefixo
 app.use('/', categoriesController);
 app.use('/', articlesController);
+app.use('/', userController);
 
 app.get('/', (req, res) => {
   // Ordenando de forma decrescente através do order
