@@ -4,10 +4,7 @@ const User = require('./User');
 // Package para criptografia
 const bcrypt = require('bcryptjs');
 
-router.get('/admin/users', (req, res) => {
-  res.send('Listagem de usuárias');
-});
-
+// CREATE
 router.get('/admin/users/create', (req, res) => {
   res.render('admin/users/create');
 });
@@ -29,6 +26,13 @@ router.post('/users/create', (req, res) => {
     .catch(() => {
       res.redirect('/');
     });
+});
+
+// READ
+router.get('/admin/users', (req, res) => {
+  User.findAll().then((users) => {
+    res.render('admin/users', { users: users });
+  });
 });
 
 module.exports = router;

@@ -1,0 +1,41 @@
+<%- include('../../partials/header'); -%>
+<%- include('../../partials/admin-navbar'); -%>
+<h3 class="mt-3">Categorias</h3>
+<table class="table table-bordered mt-3">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>E-mail</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.forEach((user) => { %>
+      <tr>
+        <th><%= user.id %> </th>
+        <th><%= user.email %> </th>
+        <th>
+          <a href="#" class="btn btn-warning mr-3">Editar</a>
+          <!-- 
+            Truque onde enviamos o valor do id através do campo escondido
+            O button chama o form que abre a roda para deletar a categoria
+          -->
+          <form method="POST" action="" onsubmit="confirmExclusion(event, this);" style="display: inline;">
+            <input type="hidden" name="id" value="<%= user.id %>">
+            <button class="btn btn-danger">Excluir</button>
+          </form>
+        </th>
+      </tr>
+    <% }); %>
+  </tbody>
+</table>
+<%- include('../../partials/footer'); -%>
+<script>
+  function confirmExclusion(event, form) {
+    event.preventDefault();
+    var decision = confirm("Deseja deletar essa categoria?");
+    if (decision) {
+      form.submit();
+    } 
+  }
+</script>
