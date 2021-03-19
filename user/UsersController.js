@@ -5,11 +5,11 @@ const User = require('./User');
 const bcrypt = require('bcryptjs');
 
 // CREATE
-router.get('/admin/users/create', (req, res) => {
-  res.render('admin/users/create');
+router.get('/admin/users/new', (req, res) => {
+  res.render('admin/users/new');
 });
 
-router.post('/users/create', (req, res) => {
+router.post('/users/save', (req, res) => {
   var email = req.body.email;
   var password = req.body.password;
 
@@ -30,7 +30,7 @@ router.post('/users/create', (req, res) => {
           res.redirect('/');
         });
     } else {
-      res.redirect('/admin/users/create');
+      res.redirect('/admin/users/new');
     }
   });
 });
