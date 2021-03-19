@@ -19,6 +19,10 @@ O blog possui como intuito divulgação de artigos das mais variadas categorias.
   - [x] Artigos 
 - [x] Criação de contas, login e logout
 
+## 🌐 Interface Web
+
+![GIF Showing the Project](.github/blog.gif)
+
 ## 👨‍💻 Como utilizar
 
 É necessário ter o NodeJS instalado na sua máquina, além de um gerenciador de pacotes, como o npm ou yarn para executar o servidor.
