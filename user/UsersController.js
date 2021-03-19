@@ -13,19 +13,26 @@ router.post('/users/create', (req, res) => {
   var email = req.body.email;
   var password = req.body.password;
 
-  var salt = bcrypt.genSaltSync(10);
-  var hash = bcrypt.hashSync(password, salt);
+  // Verifica se o email já está cadastrado no banco de dados, se não existir, ele realiza o cadastro
+  User.findOne({ where: { email: email } }).then((user) => {
+    if (user == undefined) {
+      var salt = bcrypt.genSaltSync(10);
+      var hash = bcrypt.hashSync(password, salt);
 
-  User.create({
-    email: email,
-    password: hash,
-  })
-    .then(() => {
-      res.redirect('/');
-    })
-    .catch(() => {
-      res.redirect('/');
-    });
+      User.create({
+        email: email,
+        password: hash,
+      })
+        .then(() => {
+          res.redirect('/');
+        })
+        .catch(() => {
+          res.redirect('/');
+        });
+    } else {
+      res.redirect('/admin/users/create');
+    }
+  });
 });
 
 // READ
