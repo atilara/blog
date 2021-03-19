@@ -3,12 +3,13 @@ const router = express.Router();
 const Category = require('../categories/Category');
 const Article = require('./Article');
 const slugify = require('slugify');
+const adminAuth = require('../middlewares/adminAuth');
 
 // Rotas criadas para lidar com artigos
 
 // CREATE
 // Rota para criação de um novo artigo
-router.get('/admin/articles/new', (req, res) => {
+router.get('/admin/articles/new', adminAuth, (req, res) => {
   // Incluindo o model Category na busca devido ao relacionamento existente entre as tabelas
   Category.findAll().then((categories) => {
     // Passando a variável pro view
@@ -17,7 +18,7 @@ router.get('/admin/articles/new', (req, res) => {
 });
 
 // Rota que salva os dados recebidos através do form localizado na rota new
-router.post('/articles/save', (req, res) => {
+router.post('/articles/save', adminAuth, (req, res) => {
   var title = req.body.title;
   var body = req.body.body;
   var category = req.body.category;
@@ -35,7 +36,7 @@ router.post('/articles/save', (req, res) => {
 
 // READ
 //Rota para listagem de todos os artigos
-router.get('/admin/articles', (req, res) => {
+router.get('/admin/articles', adminAuth, (req, res) => {
   Article.findAll({
     // Inclui o model de categoria na pesquisa devido ao relacionamento
     include: [{ model: Category }],
@@ -46,7 +47,7 @@ router.get('/admin/articles', (req, res) => {
 
 // UPDATE
 // Rota para edição de artigo
-router.get('/admin/articles/edit/:id', (req, res) => {
+router.get('/admin/articles/edit/:id', adminAuth, (req, res) => {
   var id = req.params.id;
   // Redireciona caso o id não seja um número
   if (isNaN(id)) res.redirect('/admin/articles');
@@ -110,7 +111,7 @@ router.get('/articles/page/:number', (req, res) => {
 });
 
 // Salva as informações recebidas pela rota de edit
-router.post('/articles/update', (req, res) => {
+router.post('/articles/update', adminAuth, (req, res) => {
   var id = req.body.id;
   var title = req.body.title;
   var body = req.body.body;
@@ -125,7 +126,7 @@ router.post('/articles/update', (req, res) => {
 });
 
 // DETELE
-router.post('/articles/delete', (req, res) => {
+router.post('/articles/delete', adminAuth, (req, res) => {
   var id = req.body.id;
 
   if (id != undefined) {
