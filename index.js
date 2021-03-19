@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const connection = require('./database/database');
 // Carregando as rotas para o arquivo principal
 const categoriesController = require('./categories/CategoriesController');
@@ -11,6 +12,21 @@ const Article = require('./articles/Article');
 const Category = require('./categories/Category');
 const User = require('./user/User');
 
+const ONE_HOUR = 1000 * 60 * 60;
+
+// Sessions para login
+app.use(
+  session({
+    // Palavra aleatória para aumentar segurança das sessões
+    secret: 'alskdjalsdkjalskdj',
+    // Cookie de identificação, informa para o servidor que o usuário possui uma sessão
+    cookie: {
+      maxAge: ONE_HOUR,
+    },
+  }),
+);
+
+// Conexão com banco de dados
 connection
   .authenticate()
   .then(() => {
@@ -20,9 +36,12 @@ connection
     console.log(error);
   });
 
+// View Engine
 app.set('view engine', 'ejs');
+// Static
 app.use(express.static('public'));
 
+// BodyParser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

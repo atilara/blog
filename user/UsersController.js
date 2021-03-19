@@ -42,4 +42,35 @@ router.get('/admin/users', (req, res) => {
   });
 });
 
+// LOGIN
+router.get('/login', (req, res) => {
+  res.render('admin/users/login');
+});
+
+router.post('/authenticate', (req, res) => {
+  var email = req.body.email;
+  var password = req.body.password;
+
+  User.findOne({ where: { email: email } }).then((user) => {
+    // Se existe um usuário
+    if (user != undefined) {
+      // Validação de senha
+      // Compara a senha fornecida no login com a senha armazenada no banco
+      var correct = bcrypt.compareSync(password, user.password);
+      if (correct) {
+        // Criação de sessão
+        req.session.user = {
+          id: user.id,
+          email: user.email,
+        };
+        res.json(req.session.user);
+      } else {
+        res.redirect('/login');
+      }
+    } else {
+      res.redirect('/login');
+    }
+  });
+});
+
 module.exports = router;
